@@ -20,34 +20,38 @@ npx expo start
 
 3. **Scan the QR code with Expo Go or run in an Android/iOS emulator**
 
+## RAWG API key
+
+c3c928a6c9ab485a9b3265ebd37ee8ae
+
 ## Assignment Checklist
 
 ### Core Features
 
-- [] Search games by name using RAWG API.
-- [] View full game details in a separate screen.
-- [] Add games to Currently Playing, Wishlist and Finished (with total hours played prompt)
+- [ ] Search games by name using RAWG API.
+- [ ] View full game details in a separate screen.
+- [ ] Add games to Currently Playing, Wishlist and Finished (with total hours played prompt)
 
 ### My Collection screen:
 
-- [] Show tabs for Currently Playing, Wishlist and Finished
-- [] Display saved games from local storage.
-- [] Allow removing games from the list.
-- [] Allow editing hours played.
+- [ ] Show tabs for Currently Playing, Wishlist and Finished
+- [ ] Display saved games from local storage.
+- [ ] Allow removing games from the list.
+- [ ] Allow editing hours played.
 
 ### Peristence
 
-- [] All added games and their states must persist using local storage (AsyncStorage, MMKV, or similar.)
+- [ ] All added games and their states must persist using local storage (AsyncStorage, MMKV, or similar.)
 
 ### Animations
 
-- [] Adding a game to a list
-- [] Editing a game
-- [] Removing a game
+- [ ] Adding a game to a list
+- [ ] Editing a game
+- [ ] Removing a game
 
 ### Bonus
 
-- [] custom hooks (e.g. useGames, useCollection)
-- [] Add a light/dark mode toggle
-- [] Add unit or component tests (Jest / @testing-library/react-native)
-- [] Use a global state manager (Context API, Zustand, or Redux) to organize collection
+- [ ] custom hooks (e.g. useGames, useCollection)
+- [ ] Add a light/dark mode toggle
+- [ ] Add unit or component tests (Jest / @testing-library/react-native)
+- [ ] Use a global state manager (Context API, Zustand, or Redux) to organize collection
