@@ -1,50 +1,53 @@
-# Welcome to your Expo app 👋
+# 🎮 GameShelf (React Native / Expo)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native app built for the Dotmoovs technical challenge.  
+GameShelf lets users search for video games using the [RAWG API](https://rawg.io/apidocs) and manage their personal game collection.
 
-## Get started
+---
 
-1. Install dependencies
+## Getting Started
+
+1. **Install dependencies**
 
    ```bash
    npm install
+
    ```
 
-2. Start the app
+2. **Start the app (Expo)**
 
-   ```bash
-   npx expo start
-   ```
+npx expo start
 
-In the output, you'll find options to open the app in a
+3. **Scan the QR code with Expo Go or run in an Android/iOS emulator**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Assignment Checklist
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Core Features
 
-## Get a fresh project
+- [] Search games by name using RAWG API.
+- [] View full game details in a separate screen.
+- [] Add games to Currently Playing, Wishlist and Finished (with total hours played prompt)
 
-When you're ready, run:
+### My Collection screen:
 
-```bash
-npm run reset-project
-```
+- [] Show tabs for Currently Playing, Wishlist and Finished
+- [] Display saved games from local storage.
+- [] Allow removing games from the list.
+- [] Allow editing hours played.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Peristence
 
-## Learn more
+- [] All added games and their states must persist using local storage (AsyncStorage, MMKV, or similar.)
 
-To learn more about developing your project with Expo, look at the following resources:
+### Animations
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- [] Adding a game to a list
+- [] Editing a game
+- [] Removing a game
 
-## Join the community
+### Bonus
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [] custom hooks (e.g. useGames, useCollection)
+- [] Add a light/dark mode toggle
+- [] Add unit or component tests (Jest / @testing-library/react-native)
+- [] Use a global state manager (Context API, Zustand, or Redux) to organize collection
