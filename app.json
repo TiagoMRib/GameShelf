@@ -41,6 +41,9 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "EXPO_PUBLIC_RAWG_API_KEY": "${EXPO_PUBLIC_RAWG_API_KEY}"
     }
   }
 }

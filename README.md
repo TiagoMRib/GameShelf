@@ -20,10 +20,6 @@ npx expo start
 
 3. **Scan the QR code with Expo Go or run in an Android/iOS emulator**
 
-## RAWG API key
-
-c3c928a6c9ab485a9b3265ebd37ee8ae
-
 ## Assignment Checklist
 
 ### Core Features

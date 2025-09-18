@@ -1,6 +1,7 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { globalStyles } from '../../assets/constants/globalStyles';
 import { icons } from '../../assets/constants/icons';
 
 type TabIconProps = {
@@ -12,7 +13,7 @@ type TabIconProps = {
 function TabIcon({ icon, focused, title }: TabIconProps) {
   return (
     <View style={[styles.iconContainer, focused && styles.iconContainerFocused]}>
-      <Image source={icon} style={styles.icon} resizeMode="contain" />
+  <Image source={icon} style={globalStyles.icon} resizeMode="contain" />
       {focused && (
         <View style={{ marginTop: 2 }}>
           <Text style={styles.iconTitle}>{title}</Text>
@@ -27,9 +28,10 @@ const _layout = () => {
     <Tabs
         screenOptions={{ 
             tabBarShowLabel: false,
-            tabBarStyle: {backgroundColor: '#a80081'}
+            tabBarStyle: {backgroundColor: '#ffffffff'}
             }}>
       <Tabs.Screen name="index" options={{ headerShown: false, title: 'Home', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.search} title="Home" /> }} />
+      <Tabs.Screen name="search" options={{ headerShown: false, title: 'Search', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.search} title="Search" /> }} />
       <Tabs.Screen name="playing" options={{ headerShown: false, title: 'Currently Playing', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.playing} title="Currently Playing" /> }} />
       <Tabs.Screen name="wishlist" options={{ headerShown: false, title: 'Wishlist', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.wishlist} title="Wishlist" /> }} />
       <Tabs.Screen name="finished" options={{ headerShown: false, title: 'Finished', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.finished} title="Finished" /> }} />
@@ -49,10 +51,7 @@ const styles = StyleSheet.create({
   iconContainerFocused: {
     backgroundColor: '#88e788', 
   },
-  icon: {
-    width: 24,
-    height: 24,
-  },
+  // icon style moved to globalStyles
   iconTitle: {
     fontSize: 10,
     color: '#222',
