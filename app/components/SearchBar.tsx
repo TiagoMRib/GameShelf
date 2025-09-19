@@ -7,17 +7,19 @@ import { icons } from '../../assets/constants/icons';
 interface Props {
   placeholder: string;
   onPress?: () => void;
+  value?: string;
+  onChangeText?: (text: string) => void;
 }
 
-const SearchBar = ({placeholder, onPress} : Props) => {
+const SearchBar = ({placeholder, onPress, value, onChangeText} : Props) => {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Image source={icons.search} style={globalStyles.iconSmall} resizeMode="contain" />
       <TextInput
         onPress={onPress}
         placeholder={placeholder}
-        value={''}
-        onChangeText={() => {}}
+        value={value}
+        onChangeText={onChangeText}
         style={{ flex: 1, marginLeft: 8 }}
       />
     </View>
