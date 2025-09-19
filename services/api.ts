@@ -26,3 +26,19 @@ export const fetchGames = async ({query}: {query: string}) => {
     const data = await response.json();
     return data.results;
 }
+
+export const fetchGameById = async (id: string) => {
+    const keyParam = `key=${RAWG_CONFIG.API_KEY}`;
+    const endpoint = `${RAWG_CONFIG.API_URL}/games/${id}?${keyParam}`;
+
+    const response = await fetch(endpoint, {
+        method: 'GET',
+        headers: RAWG_CONFIG.headers,
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch game details: ' + response.statusText);
+    }
+
+    return response.json();
+}

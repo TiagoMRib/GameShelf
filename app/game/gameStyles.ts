@@ -1,0 +1,56 @@
+import { StyleSheet } from 'react-native';
+
+export const gameDetailsStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    errorText: {
+        color: 'red',
+        textAlign: 'center',
+    },
+    headerImage: {
+        width: '100%',
+        height: 200,
+    },
+    content: {
+        padding: 16,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 16,
+        color: '#333',
+    },
+    infoRow: {
+        flexDirection: 'row',
+        marginBottom: 8,
+        alignItems: 'flex-start',
+    },
+    label: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        color: '#666',
+        width: 100,
+        marginRight: 8,
+    },
+    value: {
+        fontSize: 16,
+        color: '#333',
+        flex: 1,
+    },
+    descriptionContainer: {
+        marginTop: 16,
+    },
+    description: {
+        fontSize: 14,
+        lineHeight: 20,
+        color: '#666',
+        marginTop: 8,
+    },
+});
