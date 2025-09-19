@@ -30,7 +30,7 @@ const _layout = () => {
             tabBarShowLabel: false,
             tabBarStyle: {backgroundColor: '#ffffffff'}
             }}>
-      <Tabs.Screen name="index" options={{ headerShown: false, title: 'Home', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.search} title="Home" /> }} />
+      <Tabs.Screen name="index" options={{ headerShown: false, title: 'Home', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.app} title="Home" /> }} />
       <Tabs.Screen name="search" options={{ headerShown: false, title: 'Search', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.search} title="Search" /> }} />
       <Tabs.Screen name="playing" options={{ headerShown: false, title: 'Currently Playing', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.playing} title="Currently Playing" /> }} />
       <Tabs.Screen name="wishlist" options={{ headerShown: false, title: 'Wishlist', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.wishlist} title="Wishlist" /> }} />
