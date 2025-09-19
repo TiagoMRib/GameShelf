@@ -15,6 +15,14 @@ const GameDetails = () => {
         error: gameError
     } = useFetch(() => fetchGameById(id as string));
 
+    // debug logging
+    console.log('Game data:', { 
+        gameId: game?.id, 
+        gameName: game?.name, 
+        gameLoading, 
+        routeId: id 
+    });
+
     const {
         isInCurrentlyPlaying,
         isInWishlist,

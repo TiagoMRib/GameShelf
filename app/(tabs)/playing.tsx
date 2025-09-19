@@ -1,14 +1,24 @@
 import { icons } from '@/assets/constants/icons';
 import { useCollections } from '@/services/useCollections';
-import React from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback } from 'react';
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import GameCard from '../components/GameCard';
 
 const CurrentlyPlaying = () => {
   const {
     currentlyPlaying,
-    loading
+    loading,
+    refresh
   } = useCollections();
+
+  // Refresh collections when tab comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      console.log('Playing tab focused, refreshing collections...');
+      refresh();
+    }, [refresh])
+  );
 
   if (loading) {
     return (
