@@ -53,4 +53,25 @@ export const gameDetailsStyles = StyleSheet.create({
         color: '#666',
         marginTop: 8,
     },
+    buttonsContainer: {
+        flexDirection: 'column',
+        marginBottom: 20,
+    },
+    collectionButton: {
+        backgroundColor: '#007AFF',
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        minWidth: 120,
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    activeButton: {
+        backgroundColor: '#28A745',
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
 });

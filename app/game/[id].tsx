@@ -1,7 +1,8 @@
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
-import { ActivityIndicator, Image, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { fetchGameById } from '../../services/api';
+import { useCollections } from '../../services/useCollections';
 import useFetch from '../../services/useFetch';
 import { gameDetailsStyles as styles } from './gameStyles';
 
@@ -13,6 +14,41 @@ const GameDetails = () => {
         loading: gameLoading,
         error: gameError
     } = useFetch(() => fetchGameById(id as string));
+
+    const {
+        isInCurrentlyPlaying,
+        isInWishlist,
+        isInFinished,
+        addToCollection,
+        removeFromCollection,
+        loading: collectionsLoading
+    } = useCollections(game?.id);
+
+    const handleAddToCollection = async (collectionType: 'currentlyPlaying' | 'wishlist' | 'finished') => {
+        if (!game) return;
+        
+        try {
+            await addToCollection(collectionType, {
+                id: game.id,
+                name: game.name,
+                background_image: game.background_image,
+                released: game.released,
+                ...(collectionType === 'finished' && { hoursPlayed: 0 })
+            });
+        } catch (error) {
+            console.error('Error adding to collection:', error);
+        }
+    };
+
+    const handleRemoveFromCollection = async (collectionType: 'currentlyPlaying' | 'wishlist' | 'finished') => {
+        if (!game) return;
+        
+        try {
+            await removeFromCollection(collectionType, game.id);
+        } catch (error) {
+            console.error('Error removing from collection:', error);
+        }
+    };
 
     if (gameLoading) {
         return (
@@ -48,6 +84,45 @@ const GameDetails = () => {
             
             <View style={styles.content}>
                 <Text style={styles.title}>{game.name}</Text>
+                
+                {/* Collection Buttons */}
+                <View style={styles.buttonsContainer}>
+                    <TouchableOpacity 
+                        style={[styles.collectionButton, isInCurrentlyPlaying && styles.activeButton]}
+                        onPress={() => isInCurrentlyPlaying ? 
+                            handleRemoveFromCollection('currentlyPlaying') : 
+                            handleAddToCollection('currentlyPlaying')
+                        }
+                    >
+                        <Text style={styles.buttonText}>
+                            {isInCurrentlyPlaying ? 'Playing' : '+ Currently Playing'}
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity 
+                        style={[styles.collectionButton, isInWishlist && styles.activeButton]}
+                        onPress={() => isInWishlist ? 
+                            handleRemoveFromCollection('wishlist') : 
+                            handleAddToCollection('wishlist')
+                        }
+                    >
+                        <Text style={styles.buttonText}>
+                            {isInWishlist ? 'In Wishlist' : '+ Wishlist'}
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity 
+                        style={[styles.collectionButton, isInFinished && styles.activeButton]}
+                        onPress={() => isInFinished ? 
+                            handleRemoveFromCollection('finished') : 
+                            handleAddToCollection('finished')
+                        }
+                    >
+                        <Text style={styles.buttonText}>
+                            {isInFinished ? 'Finished' : '+ Finished'}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
                 
                 <View style={styles.infoRow}>
                     <Text style={styles.label}>Released:</Text>
