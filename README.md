@@ -24,7 +24,7 @@ npx expo start
 
 ### Core Features
 
-- [ ] Search games by name using RAWG API.
+- [x] Search games by name using RAWG API.
 - [ ] View full game details in a separate screen.
 - [ ] Add games to Currently Playing, Wishlist and Finished (with total hours played prompt)
 

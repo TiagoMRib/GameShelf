@@ -1,7 +1,7 @@
 import { Link } from 'expo-router';
 import React from 'react';
 import { Image, Text, TouchableOpacity } from 'react-native';
-import { gameCardStyles as styles } from './componentStyles';
+import { gameCardWidth, gameCardStyles as styles } from './componentStyles';
 
 interface GameCardProps{
     id: number;
@@ -12,14 +12,12 @@ interface GameCardProps{
 
 const GameCard = ({ id, name, background_image, released }: GameCardProps) => {
   return (
-
     <Link href={`/game/${id}`} asChild>
-        <TouchableOpacity>
-            <Image source={{ uri: background_image }} style={styles.image} resizeMode="cover" />
-            <Text style={styles.title} numberOfLines={2}>{name}</Text>
-            <Text style={styles.release}>Released: {released}</Text>
-           </TouchableOpacity>
-
+      <TouchableOpacity style={[styles.card, { width: gameCardWidth }]}> 
+        <Image source={{ uri: background_image }} style={[styles.image, { width: gameCardWidth }]} resizeMode="cover" />
+  <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">{name}</Text>
+        <Text style={styles.release}>Released: {released}</Text>
+      </TouchableOpacity>
     </Link>
   );
 };
