@@ -1,3 +1,4 @@
+import { globalStyles } from '@/assets/constants/globalStyles';
 import { icons } from '@/assets/constants/icons';
 import { fetchGames } from '@/services/api';
 import useFetch from '@/services/useFetch';
@@ -43,7 +44,7 @@ const Search = () => {
         renderItem={({ item }) => <GameCard {...item} />} 
         keyExtractor={(item) => item.id.toString()} 
         numColumns={3} 
-        columnWrapperStyle={{ justifyContent: 'flex-start', gap: 20, marginRight: 5, marginBottom: 10 }} 
+        columnWrapperStyle={globalStyles.gameGridColumn}
         ListHeaderComponent={
         <>
           <Image source={icons.app} style={{ width: 100, height: 100, alignSelf: 'center', marginTop: 50 }} />
@@ -69,10 +70,10 @@ const Search = () => {
         ListEmptyComponent={ 
           !gamesLoading && !gamesError ? (
             <View style={{ alignItems: 'center', marginTop: 20 }}>
-              <Text>{searchQuery.trim() ? `No results found for '${searchQuery}'` : 'Search for a Game'}</Text>
+              <Text style={globalStyles.sectionTitle} >{searchQuery.trim() ? `No results found for '${searchQuery}'` : 'Search for a Game'}</Text>
             </View>
           ) : null }
-        contentContainerStyle={{ paddingBottom: 20, paddingHorizontal: 10, paddingTop: 20 }}
+        contentContainerStyle={[globalStyles.gameGrid, { paddingTop: 20 }]}
       />
     </View>
   )

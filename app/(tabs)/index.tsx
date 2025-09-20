@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { ActivityIndicator, FlatList, RefreshControl, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, RefreshControl, Text, View } from 'react-native';
 import { globalStyles } from '../../assets/constants/globalStyles';
+import { icons } from '../../assets/constants/icons';
 import { usePaginatedGames } from '../../services/usePaginatedGames';
 import GameCard from "../components/GameCard";
 import SearchBar from "../components/SearchBar";
@@ -32,6 +33,7 @@ export default function Index() {
 
   const ListHeader = () => (
     <View style={{ padding: 20, alignItems: 'center' }}>
+      <Image source={icons.app} style={{ width: 100, height: 100, alignSelf: 'center', marginTop: 50 }} />
       <Text style={globalStyles.logo}>GameShelf</Text>
       <SearchBar 
         placeholder="Search for a game..." 
@@ -65,10 +67,10 @@ export default function Index() {
       )}
       keyExtractor={(item) => item.id.toString()}
       numColumns={3}
-      columnWrapperStyle={{ justifyContent: 'flex-start', gap: 20, marginRight: 5, marginBottom: 10 }}
+      columnWrapperStyle={globalStyles.gameGridColumn}
       ListHeaderComponent={ListHeader}
       ListFooterComponent={renderFooter}
-      contentContainerStyle={{ paddingBottom: 20 }}
+      contentContainerStyle={globalStyles.gameGrid}
       showsVerticalScrollIndicator={false}
       onEndReached={loadMore}
       onEndReachedThreshold={0.1}

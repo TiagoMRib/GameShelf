@@ -1,23 +1,53 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { globalStyles } from '../../assets/constants/globalStyles';
+import { Image, Text, View } from 'react-native';
 import { icons } from '../../assets/constants/icons';
+import { tabBarStyles } from './tabbarStyles';
 
 type TabIconProps = {
   icon: any; 
   focused: boolean;
   title: string;
+  isHome?: boolean; // Special prop for home tab
 };
 
-function TabIcon({ icon, focused, title }: TabIconProps) {
+function TabIcon({ icon, focused, title, isHome = false }: TabIconProps) {
+  if (isHome) {
+    // Special rendering for home tab
+    return (
+      <View style={[
+        tabBarStyles.homeIconContainer, 
+        focused && tabBarStyles.homeIconContainerFocused
+      ]}>
+        <Image 
+          source={icon} 
+          style={[
+            tabBarStyles.homeTabIcon,
+            focused && tabBarStyles.homeTabIconFocused
+          ]} 
+          resizeMode="contain" 
+        />
+        {/* No text for home tab */}
+      </View>
+    );
+  }
+
+  // Regular tab rendering
   return (
-    <View style={[styles.iconContainer, focused && styles.iconContainerFocused]}>
-  <Image source={icon} style={globalStyles.icon} resizeMode="contain" />
+    <View style={[
+      tabBarStyles.iconContainer, 
+      focused && tabBarStyles.iconContainerFocused
+    ]}>
+      <Image 
+        source={icon} 
+        style={[
+          tabBarStyles.tabIcon,
+          focused && tabBarStyles.tabIconFocused
+        ]} 
+        resizeMode="contain" 
+      />
       {focused && (
-        <View style={{ marginTop: 2 }}>
-          <Text style={styles.iconTitle}>{title}</Text>
-        </View>
+        <Text style={tabBarStyles.iconTitle}>{title}</Text>
       )}
     </View>
   );
@@ -26,38 +56,64 @@ function TabIcon({ icon, focused, title }: TabIconProps) {
 const _layout = () => {
   return (
     <Tabs
-        screenOptions={{ 
-            tabBarShowLabel: false,
-            tabBarStyle: {backgroundColor: '#ffffffff'}
-            }}>
-      <Tabs.Screen name="index" options={{ headerShown: false, title: 'Home', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.app} title="Home" /> }} />
-      <Tabs.Screen name="search" options={{ headerShown: false, title: 'Search', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.search} title="Search" /> }} />
-      <Tabs.Screen name="playing" options={{ headerShown: false, title: 'Currently Playing', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.playing} title="Currently Playing" /> }} />
-      <Tabs.Screen name="wishlist" options={{ headerShown: false, title: 'Wishlist', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.wishlist} title="Wishlist" /> }} />
-      <Tabs.Screen name="finished" options={{ headerShown: false, title: 'Finished', tabBarIcon: ({ focused }) => <TabIcon focused={focused} icon={icons.finished} title="Finished" /> }} />
+      screenOptions={{ 
+        tabBarShowLabel: false,
+        tabBarStyle: tabBarStyles.tabBar
+      }}
+      initialRouteName="index" // Set home as the initial route
+    >
+      <Tabs.Screen 
+        name="search" 
+        options={{ 
+          headerShown: false, 
+          title: 'Search', 
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.search} title="Search" />
+          )
+        }} 
+      />
+      <Tabs.Screen 
+        name="wishlist" 
+        options={{ 
+          headerShown: false, 
+          title: 'Wishlist', 
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.wishlist} title="Wishlist" />
+          )
+        }} 
+      />
+      <Tabs.Screen 
+        name="index" 
+        options={{ 
+          headerShown: false, 
+          title: 'Home', 
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.app} title="Home" isHome={true} />
+          )
+        }} 
+      />
+      <Tabs.Screen 
+        name="playing" 
+        options={{ 
+          headerShown: false, 
+          title: 'Currently Playing', 
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.playing} title="Playing" />
+          )
+        }} 
+      />
+      <Tabs.Screen 
+        name="finished" 
+        options={{ 
+          headerShown: false, 
+          title: 'Finished', 
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.finished} title="Finished" />
+          )
+        }} 
+      />
     </Tabs>
   )
 }
-
-const styles = StyleSheet.create({
-  iconContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 44,
-    height: 40,
-    borderRadius: 8, 
-    paddingVertical: 2,
-  },
-  iconContainerFocused: {
-    backgroundColor: '#88e788', 
-  },
-  // icon style moved to globalStyles
-  iconTitle: {
-    fontSize: 10,
-    color: '#222',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-});
 
 export default _layout

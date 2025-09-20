@@ -12,7 +12,7 @@ export const gameCardStyles = StyleSheet.create({
 		alignItems: 'center',
 		elevation: 2,
 		width: gameCardWidth,
-		height: 160, // fixed height for all cards
+		height: 160, 
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 	},

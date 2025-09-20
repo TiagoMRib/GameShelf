@@ -41,9 +41,9 @@ npx expo start
 
 ### Animations
 
-- [ ] Adding a game to a list
-- [ ] Editing a game
-- [ ] Removing a game
+- [x] Adding a game to a list
+- [x] Editing a game
+- [x] Removing a game
 
 ### Bonus
 

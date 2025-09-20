@@ -1,3 +1,4 @@
+import { globalStyles } from '@/assets/constants/globalStyles';
 import { icons } from '@/assets/constants/icons';
 import { useCollections } from '@/services/useCollections';
 import { useFocusEffect } from '@react-navigation/native';
@@ -12,7 +13,7 @@ const Wishlist = () => {
     refresh
   } = useCollections();
 
-  // Refresh collections when tab comes into focus
+  // Refresh collections when tab 
   useFocusEffect(
     useCallback(() => {
       console.log('Wishlist tab focused, refreshing collections...');
@@ -36,11 +37,11 @@ const Wishlist = () => {
       )}
       keyExtractor={(item) => item.id.toString()}
       numColumns={3}
-      columnWrapperStyle={{ justifyContent: 'flex-start', gap: 20, marginRight: 5, marginBottom: 10 }}
+      columnWrapperStyle={globalStyles.gameGridColumn}
       ListHeaderComponent={
         <>
           <Image source={icons.wishlist} style={{ width: 100, height: 100, alignSelf: 'center', marginTop: 50 }} />
-          <Text style={{ fontSize: 24, fontWeight: 'bold', marginTop: 20, marginBottom: 10, textAlign: 'center' }}>
+          <Text style={globalStyles.sectionTitle}>
             Wishlist
           </Text>
         </>
@@ -53,7 +54,7 @@ const Wishlist = () => {
           </Text>
         </View>
       }
-      contentContainerStyle={{ paddingBottom: 20, paddingHorizontal: 10 }}
+      contentContainerStyle={globalStyles.gameGrid}
       showsVerticalScrollIndicator={false}
     />
   );

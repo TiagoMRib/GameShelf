@@ -1,3 +1,4 @@
+import { globalStyles } from '@/assets/constants/globalStyles';
 import { icons } from '@/assets/constants/icons';
 import { useCollections } from '@/services/useCollections';
 import { useFocusEffect } from '@react-navigation/native';
@@ -36,7 +37,7 @@ const CurrentlyPlaying = () => {
       )}
       keyExtractor={(item) => item.id.toString()}
       numColumns={3}
-      columnWrapperStyle={{ justifyContent: 'flex-start', gap: 20, marginRight: 5, marginBottom: 10 }}
+      columnWrapperStyle={globalStyles.gameGridColumn}
       ListHeaderComponent={
         <>
           <Image source={icons.playing} style={{ width: 100, height: 100, alignSelf: 'center', marginTop: 50 }} />
@@ -53,7 +54,7 @@ const CurrentlyPlaying = () => {
           </Text>
         </View>
       }
-      contentContainerStyle={{ paddingBottom: 20, paddingHorizontal: 10 }}
+      contentContainerStyle={globalStyles.gameGrid}
       showsVerticalScrollIndicator={false}
     />
   );
