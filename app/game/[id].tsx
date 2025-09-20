@@ -5,6 +5,7 @@ import { icons } from '../../assets/constants/icons';
 import { fetchGameById } from '../../services/api';
 import { useCollections } from '../../services/useCollections';
 import useFetch from '../../services/useFetch';
+import CollectionButton from '../components/CollectionButton';
 import HoursPlayedPopUp from '../components/HoursPlayedPopUp';
 import { gameDetailsStyles as styles } from './gameStyles';
 
@@ -56,16 +57,30 @@ const GameDetails = () => {
         }
     };
 
-    // Handle finished button press
-    const handleFinishedButtonPress = () => {
-        if (isInFinished) {
-            // If already in finished, remove it
-            handleRemoveFromCollection('finished');
-        } else {
-            // If not in finished, show hours pop up
-            setIsEditingHours(false);
-            setIsHoursPopUpVisible(true);
-        }
+    // Collection button handlers
+    const handleCurrentlyPlayingAdd = () => {
+        handleAddToCollection('currentlyPlaying');
+    };
+
+    const handleCurrentlyPlayingRemove = () => {
+        handleRemoveFromCollection('currentlyPlaying');
+    };
+
+    const handleWishlistAdd = () => {
+        handleAddToCollection('wishlist');
+    };
+
+    const handleWishlistRemove = () => {
+        handleRemoveFromCollection('wishlist');
+    };
+
+    const handleFinishedAdd = () => {
+        setIsEditingHours(false);
+        setIsHoursPopUpVisible(true);
+    };
+
+    const handleFinishedRemove = () => {
+        handleRemoveFromCollection('finished');
     };
 
     // Handle edit hours button press
@@ -78,14 +93,7 @@ const GameDetails = () => {
     const handleHoursConfirm = (hours: number) => {
         setIsHoursPopUpVisible(false);
         setIsEditingHours(false);
-        
-        if (isEditingHours) {
-            // Update existing finished game with new hours
-            handleAddToCollection('finished', hours);
-        } else {
-            // Add new game to finished collection
-            handleAddToCollection('finished', hours);
-        }
+        handleAddToCollection('finished', hours);
     };
 
     // Handle pop up cancel
@@ -132,38 +140,26 @@ const GameDetails = () => {
                     
                     {/* Collection Buttons */}
                     <View style={styles.buttonsContainer}>
-                        <TouchableOpacity 
-                            style={[styles.collectionButton, isInCurrentlyPlaying && styles.activeButton]}
-                            onPress={() => isInCurrentlyPlaying ? 
-                                handleRemoveFromCollection('currentlyPlaying') : 
-                                handleAddToCollection('currentlyPlaying')
-                            }
-                        >
-                            <Text style={styles.buttonText}>
-                                {isInCurrentlyPlaying ? 'Playing' : '+ Currently Playing'}
-                            </Text>
-                        </TouchableOpacity>
+                        <CollectionButton
+                            collectionType="currentlyPlaying"
+                            isInCollection={isInCurrentlyPlaying}
+                            onAdd={handleCurrentlyPlayingAdd}
+                            onRemove={handleCurrentlyPlayingRemove}
+                        />
 
-                        <TouchableOpacity 
-                            style={[styles.collectionButton, isInWishlist && styles.activeButton]}
-                            onPress={() => isInWishlist ? 
-                                handleRemoveFromCollection('wishlist') : 
-                                handleAddToCollection('wishlist')
-                            }
-                        >
-                            <Text style={styles.buttonText}>
-                                {isInWishlist ? 'In Wishlist' : '+ Wishlist'}
-                            </Text>
-                        </TouchableOpacity>
+                        <CollectionButton
+                            collectionType="wishlist"
+                            isInCollection={isInWishlist}
+                            onAdd={handleWishlistAdd}
+                            onRemove={handleWishlistRemove}
+                        />
 
-                        <TouchableOpacity 
-                            style={[styles.collectionButton, isInFinished && styles.activeButton]}
-                            onPress={handleFinishedButtonPress}
-                        >
-                            <Text style={styles.buttonText}>
-                                {isInFinished ? 'Finished' : '+ Finished'}
-                            </Text>
-                        </TouchableOpacity>
+                        <CollectionButton
+                            collectionType="finished"
+                            isInCollection={isInFinished}
+                            onAdd={handleFinishedAdd}
+                            onRemove={handleFinishedRemove}
+                        />
                     </View>
 
                     {/* Hours Played Display - Only show if game is finished*/}

@@ -43,7 +43,7 @@ const HoursPlayedPopUp: React.FC<HoursPlayedPopUpProps> = ({
     <Modal
       visible={visible}
       transparent={true}
-      animationType="fade"
+      animationType="slide"
       onRequestClose={handleCancel}
     >
       <View style={styles.overlay}>
@@ -56,7 +56,7 @@ const HoursPlayedPopUp: React.FC<HoursPlayedPopUpProps> = ({
             style={styles.input}
             value={hoursText}
             onChangeText={setHoursText}
-            placeholder="Enter hours (e.g., 25)"
+            placeholder="Enter hours played"
             keyboardType="numeric"
             autoFocus={true}
             selectTextOnFocus={true}
@@ -80,7 +80,7 @@ const HoursPlayedPopUp: React.FC<HoursPlayedPopUpProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
