@@ -7,25 +7,24 @@ export const RAWG_CONFIG = {
     }
 };
 
-export const fetchGames = async ({query}: {query: string}) => {
-    const keyParam = `key=${RAWG_CONFIG.API_KEY}`;
-    let endpoint = `${RAWG_CONFIG.API_URL}/games?${keyParam}`;
-    if (query) {
-        endpoint += `&search=${encodeURIComponent(query)}`;
-    }
-
-    const response = await fetch(endpoint, {
-        method: 'GET',
+export const fetchGames = async ({query, page = 1, page_size = 21}: {query: string, page?: number, page_size?: number}) => {
+    const url = `${RAWG_CONFIG.API_URL}/games?key=${RAWG_CONFIG.API_KEY}&search=${encodeURIComponent(query)}&page=${page}&page_size=${page_size}`;
+    
+    console.log('Fetching games from:', url);
+    
+    const response = await fetch(url, {
         headers: RAWG_CONFIG.headers,
     });
-
+    
     if (!response.ok) {
-        throw new Error('Failed to fetch games: ' + response.statusText);
+        throw new Error('Failed to fetch games');
     }
-
+    
     const data = await response.json();
-    return data.results;
-}
+    console.log('Fetched games data:', data);
+    
+    return data;
+};
 
 export const fetchGameById = async (id: string) => {
     const keyParam = `key=${RAWG_CONFIG.API_KEY}`;

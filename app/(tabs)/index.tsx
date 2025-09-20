@@ -1,34 +1,58 @@
-import { fetchGames } from '@/services/api';
-import useFetch from '@/services/useFetch';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
-import { icons } from '../../assets/constants/icons';
-import GameCard from '../components/GameCard';
+import { ActivityIndicator, FlatList, RefreshControl, Text, View } from 'react-native';
+import { globalStyles } from '../../assets/constants/globalStyles';
+import { usePaginatedGames } from '../../services/usePaginatedGames';
+import GameCard from "../components/GameCard";
 import SearchBar from "../components/SearchBar";
 
 export default function Index() {
   const router = useRouter();
 
   const {
-    data: games, 
-    loading: gamesLoading, 
-    error: gamesError
-  } = useFetch(() => fetchGames({query: ''}));
-  
+    games,
+    loading,
+    error,
+    loadMore,
+    hasMore,
+    refreshing,
+    refresh
+  } = usePaginatedGames('');
 
-  if (gamesLoading) {
+  const renderFooter = () => {
+    if (!hasMore) return null;
+    
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#0000ff" />
+      <View style={{ padding: 20, alignItems: 'center' }}>
+        <ActivityIndicator size="small" color="#0000ff" />
+        <Text style={{ marginTop: 10, color: '#666' }}>Loading more games...</Text>
       </View>
     );
-  }
+  };
 
-  if (gamesError) {
+  const ListHeader = () => (
+    <View style={{ padding: 20, alignItems: 'center' }}>
+      <Text style={globalStyles.logo}>GameShelf</Text>
+      <SearchBar 
+        placeholder="Search for a game..." 
+        onPress={() => router.push('/search')}
+      />
+      <Text style={globalStyles.sectionTitle}>Discover Games</Text>
+    </View>
+  );
+
+  if (error) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: 'red', textAlign: 'center' }}>Error: {gamesError.message}</Text>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
+        <Text style={{ color: 'red', textAlign: 'center' }}>
+          Error loading games: {error.message}
+        </Text>
+        <Text 
+          style={{ color: '#0066cc', marginTop: 10 }} 
+          onPress={refresh}
+        >
+          Tap to retry
+        </Text>
       </View>
     );
   }
@@ -42,18 +66,19 @@ export default function Index() {
       keyExtractor={(item) => item.id.toString()}
       numColumns={3}
       columnWrapperStyle={{ justifyContent: 'flex-start', gap: 20, marginRight: 5, marginBottom: 10 }}
-      ListHeaderComponent={
-        <>
-          <Image source={icons.app} style={{ width: 100, height: 100, alignSelf: 'center', marginTop: 50 }} />
-          <SearchBar 
-            onPress={() => router.push('/search')} 
-            placeholder="Search"
-          />
-          <Text style={{ fontSize: 24, fontWeight: 'bold', marginTop: 20, marginBottom: 10 }}>Our Library</Text>
-        </>
-      }
+      ListHeaderComponent={ListHeader}
+      ListFooterComponent={renderFooter}
       contentContainerStyle={{ paddingBottom: 20 }}
       showsVerticalScrollIndicator={false}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.1}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={refresh}
+          colors={['#0066cc']}
+        />
+      }
     />
   );
 }

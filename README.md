@@ -30,9 +30,9 @@ npx expo start
 
 ### My Collection screen:
 
-- [ ] Show tabs for Currently Playing, Wishlist and Finished
-- [ ] Display saved games from local storage.
-- [ ] Allow removing games from the list.
+- [x] Show tabs for Currently Playing, Wishlist and Finished
+- [x] Display saved games from local storage.
+- [x] Allow removing games from the list.
 - [ ] Allow editing hours played.
 
 ### Peristence
@@ -47,7 +47,7 @@ npx expo start
 
 ### Bonus
 
-- [ ] custom hooks (e.g. useGames, useCollection)
+- [x] custom hooks (e.g. useGames, useCollection)
 - [ ] Add a light/dark mode toggle
 - [ ] Add unit or component tests (Jest / @testing-library/react-native)
 - [ ] Use a global state manager (Context API, Zustand, or Redux) to organize collection
