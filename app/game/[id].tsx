@@ -1,6 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { icons } from '../../assets/constants/icons';
 import { fetchGameById } from '../../services/api';
 import { useCollections } from '../../services/useCollections';
 import useFetch from '../../services/useFetch';
@@ -11,6 +12,7 @@ const GameDetails = () => {
     const { id } = useLocalSearchParams();
     
     const [isHoursPopUpVisible, setIsHoursPopUpVisible] = useState(false);
+    const [isEditingHours, setIsEditingHours] = useState(false);
     
     const {
         data: game,
@@ -18,18 +20,11 @@ const GameDetails = () => {
         error: gameError
     } = useFetch(() => fetchGameById(id as string));
 
-    // debug logging
-    /*console.log('Game data:', { 
-        gameId: game?.id, 
-        gameName: game?.name, 
-        gameLoading, 
-        routeId: id 
-    });*/
-
     const {
         isInCurrentlyPlaying,
         isInWishlist,
         isInFinished,
+        finishedGameData,
         addToCollection,
         removeFromCollection,
         loading: collectionsLoading
@@ -68,19 +63,35 @@ const GameDetails = () => {
             handleRemoveFromCollection('finished');
         } else {
             // If not in finished, show hours pop up
+            setIsEditingHours(false);
             setIsHoursPopUpVisible(true);
         }
+    };
+
+    // Handle edit hours button press
+    const handleEditHoursPress = () => {
+        setIsEditingHours(true);
+        setIsHoursPopUpVisible(true);
     };
 
     // Handle hours confirmation from pop up
     const handleHoursConfirm = (hours: number) => {
         setIsHoursPopUpVisible(false);
-        handleAddToCollection('finished', hours);
+        setIsEditingHours(false);
+        
+        if (isEditingHours) {
+            // Update existing finished game with new hours
+            handleAddToCollection('finished', hours);
+        } else {
+            // Add new game to finished collection
+            handleAddToCollection('finished', hours);
+        }
     };
 
     // Handle pop up cancel
     const handleHoursCancel = () => {
         setIsHoursPopUpVisible(false);
+        setIsEditingHours(false);
     };
 
     if (gameLoading) {
@@ -154,6 +165,21 @@ const GameDetails = () => {
                             </Text>
                         </TouchableOpacity>
                     </View>
+
+                    {/* Hours Played Display - Only show if game is finished*/}
+                    {isInFinished && finishedGameData && (
+                        <View style={styles.hoursPlayedContainer}>
+                            <Text style={styles.hoursPlayedText}>
+                                Hours Played: {finishedGameData.hoursPlayed || 0}h
+                            </Text>
+                            <TouchableOpacity 
+                                style={styles.editButton}
+                                onPress={handleEditHoursPress}
+                            >
+                                <Image source={icons.edit} style={styles.editIcon} resizeMode="contain" />
+                            </TouchableOpacity>
+                        </View>
+                    )}
                     
                     <View style={styles.infoRow}>
                         <Text style={styles.label}>Released:</Text>

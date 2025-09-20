@@ -1,4 +1,5 @@
 import app from '../icons/app.png'
+import edit from '../icons/edit.png'
 import finished from '../icons/finished.png'
 import playing from '../icons/playing.png'
 import search from '../icons/search.png'
@@ -9,5 +10,6 @@ export const icons = {
   search,
   wishlist,
   finished,
-  playing
+  playing,
+  edit
 }
