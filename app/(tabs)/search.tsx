@@ -11,12 +11,14 @@ const Search = () => {
   const [searchQuery, setSearchQuery] = useState('')
 
   const {
-    data: games, 
+    data: searchResponse, 
     loading: gamesLoading,
     refetch: loadGames,
     reset, 
     error: gamesError
   } = useFetch(() => fetchGames({query: searchQuery}), false);
+
+  const games = searchResponse?.results || [];
 
   useEffect(() => {
 

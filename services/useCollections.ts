@@ -23,11 +23,11 @@ export const useCollections = (gameId?: number): UseCollectionsResult => {
 
   // Load all collections
   const loadCollections = useCallback(async () => {
-    if (!gameId) return;
-    
     setLoading(true);
     try {
+      console.log('Loading all collections...');
       const collections = await CollectionsService.getAllCollections();
+      console.log('Loaded collections:', collections);
       setCurrentlyPlaying(collections.currentlyPlaying);
       setWishlist(collections.wishlist);
       setFinished(collections.finished);
@@ -36,14 +36,14 @@ export const useCollections = (gameId?: number): UseCollectionsResult => {
     } finally {
       setLoading(false);
     }
-  }, [gameId]);
+  }, []); 
 
-  // Load collections when gameId changes
+  // Load collections when component mounts
   useEffect(() => {
     loadCollections();
   }, [loadCollections]);
 
-  // Check if game is in each collection
+  // Check if game is in each collection 
   const isInCurrentlyPlaying = gameId ? currentlyPlaying.some(game => game.id === gameId) : false;
   const isInWishlist = gameId ? wishlist.some(game => game.id === gameId) : false;
   const isInFinished = gameId ? finished.some(game => game.id === gameId) : false;
@@ -72,6 +72,7 @@ export const useCollections = (gameId?: number): UseCollectionsResult => {
   }, [loadCollections]);
 
   const refresh = useCallback(() => {
+    console.log('Refresh called, reloading collections...');
     loadCollections();
   }, [loadCollections]);
 

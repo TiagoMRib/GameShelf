@@ -25,19 +25,19 @@ npx expo start
 ### Core Features
 
 - [x] Search games by name using RAWG API.
-- [ ] View full game details in a separate screen.
-- [ ] Add games to Currently Playing, Wishlist and Finished (with total hours played prompt)
+- [x] View full game details in a separate screen.
+- [x] Add games to Currently Playing, Wishlist and Finished (with total hours played prompt)
 
 ### My Collection screen:
 
 - [x] Show tabs for Currently Playing, Wishlist and Finished
 - [x] Display saved games from local storage.
 - [x] Allow removing games from the list.
-- [ ] Allow editing hours played.
+- [x] Allow editing hours played.
 
 ### Peristence
 
-- [ ] All added games and their states must persist using local storage (AsyncStorage, MMKV, or similar.)
+- [x] All added games and their states must persist using local storage (AsyncStorage, MMKV, or similar.)
 
 ### Animations
 
