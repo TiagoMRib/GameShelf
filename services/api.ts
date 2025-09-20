@@ -21,7 +21,6 @@ export const fetchGames = async ({query, page = 1, page_size = 21}: {query: stri
     }
     
     const data = await response.json();
-    console.log('Fetched games data:', data);
     
     return data;
 };

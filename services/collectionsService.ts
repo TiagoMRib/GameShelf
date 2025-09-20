@@ -1,87 +1,108 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type GameCollection = 'currentlyPlaying' | 'wishlist' | 'finished';
+const COLLECTIONS_KEYS = {
+  currentlyPlaying: 'currentlyPlaying',
+  wishlist: 'wishlist', 
+  finished: 'finished'
+};
 
-export interface CollectionGame {
+export interface GameCollection {
   id: number;
   name: string;
   background_image: string;
   released: string;
-  addedAt: string;
-  hoursPlayed?: number; // For finished games
+  hoursPlayed?: number; // Only used for finished games
 }
 
-const STORAGE_KEYS = {
-  currentlyPlaying: '@gameshelf_currently_playing',
-  wishlist: '@gameshelf_wishlist',
-  finished: '@gameshelf_finished',
-};
-
 export class CollectionsService {
-  static async getCollection(collectionType: GameCollection): Promise<CollectionGame[]> {
+  // Get games from a specific collection
+  static async getCollection(collectionType: keyof typeof COLLECTIONS_KEYS): Promise<GameCollection[]> {
     try {
-      const data = await AsyncStorage.getItem(STORAGE_KEYS[collectionType]);
-      return data ? JSON.parse(data) : [];
+      const key = COLLECTIONS_KEYS[collectionType];
+      const storedData = await AsyncStorage.getItem(key);
+      return storedData ? JSON.parse(storedData) : [];
     } catch (error) {
-      console.error(`Error getting ${collectionType}:`, error);
+      console.error(`Error getting ${collectionType} collection:`, error);
       return [];
     }
   }
 
-  static async addToCollection(
-    collectionType: GameCollection, 
-    game: Omit<CollectionGame, 'addedAt'>
-  ): Promise<void> {
+  // Add a game to a collection
+  static async addToCollection(collectionType: keyof typeof COLLECTIONS_KEYS, game: GameCollection): Promise<void> {
     try {
       const collection = await this.getCollection(collectionType);
-      const gameWithTimestamp: CollectionGame = {
-        ...game,
-        addedAt: new Date().toISOString(),
-      };
       
-      // Check if game already exists
+      // Check if game is already in collection
       const existingIndex = collection.findIndex(g => g.id === game.id);
-      if (existingIndex === -1) {
-        collection.push(gameWithTimestamp);
-        await AsyncStorage.setItem(STORAGE_KEYS[collectionType], JSON.stringify(collection));
+      
+      if (existingIndex >= 0) {
+        // Update existing game
+        collection[existingIndex] = game;
+      } else {
+        // Add new game to collection
+        collection.push(game);
       }
+      
+      const key = COLLECTIONS_KEYS[collectionType];
+      await AsyncStorage.setItem(key, JSON.stringify(collection));
+      
+      console.log(`Added game "${game.name}" to ${collectionType} collection`);
     } catch (error) {
-      console.error(`Error adding to ${collectionType}:`, error);
+      console.error(`Error adding to ${collectionType} collection:`, error);
       throw error;
     }
   }
 
-  static async removeFromCollection(collectionType: GameCollection, gameId: number): Promise<void> {
+  // Remove a game from a collection
+  static async removeFromCollection(collectionType: keyof typeof COLLECTIONS_KEYS, gameId: number): Promise<void> {
     try {
       const collection = await this.getCollection(collectionType);
       const filteredCollection = collection.filter(game => game.id !== gameId);
-      await AsyncStorage.setItem(STORAGE_KEYS[collectionType], JSON.stringify(filteredCollection));
+      
+      const key = COLLECTIONS_KEYS[collectionType];
+      await AsyncStorage.setItem(key, JSON.stringify(filteredCollection));
+      
+      console.log(`Removed game with id ${gameId} from ${collectionType} collection`);
     } catch (error) {
-      console.error(`Error removing from ${collectionType}:`, error);
+      console.error(`Error removing from ${collectionType} collection:`, error);
       throw error;
     }
   }
 
-  static async isGameInCollection(collectionType: GameCollection, gameId: number): Promise<boolean> {
+  // Check if a game is in a collection
+  static async isInCollection(collectionType: keyof typeof COLLECTIONS_KEYS, gameId: number): Promise<boolean> {
     try {
       const collection = await this.getCollection(collectionType);
       return collection.some(game => game.id === gameId);
     } catch (error) {
-      console.error(`Error checking ${collectionType}:`, error);
+      console.error(`Error checking ${collectionType} collection:`, error);
       return false;
     }
   }
 
-  static async updateHoursPlayed(gameId: number, hours: number): Promise<void> {
+  // Get all collections at once
+  static async getAllCollections() {
+    const [currentlyPlaying, wishlist, finished] = await Promise.all([
+      this.getCollection('currentlyPlaying'),
+      this.getCollection('wishlist'),
+      this.getCollection('finished')
+    ]);
+
+    return {
+      currentlyPlaying,
+      wishlist,
+      finished
+    };
+  }
+
+  // Clear a specific collection
+  static async clearCollection(collectionType: keyof typeof COLLECTIONS_KEYS): Promise<void> {
     try {
-      const collection = await this.getCollection('finished');
-      const gameIndex = collection.findIndex(g => g.id === gameId);
-      if (gameIndex !== -1) {
-        collection[gameIndex].hoursPlayed = hours;
-        await AsyncStorage.setItem(STORAGE_KEYS.finished, JSON.stringify(collection));
-      }
+      const key = COLLECTIONS_KEYS[collectionType];
+      await AsyncStorage.removeItem(key);
+      console.log(`Cleared ${collectionType} collection`);
     } catch (error) {
-      console.error('Error updating hours played:', error);
+      console.error(`Error clearing ${collectionType} collection:`, error);
       throw error;
     }
   }
