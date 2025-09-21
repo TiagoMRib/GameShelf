@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Image, TextInput, View } from 'react-native';
-import { globalStyles } from '../../assets/constants/globalStyles';
 import { icons } from '../../assets/constants/icons';
+import { useThemeColors } from '../context/useThemeColors';
+import { createComponentStyles } from './styles/componentStyles';
 
 interface Props {
   placeholder: string;
@@ -11,19 +11,23 @@ interface Props {
   onChangeText?: (text: string) => void;
 }
 
-const SearchBar = ({placeholder, onPress, value, onChangeText} : Props) => {
+const SearchBar = ({ placeholder, onPress, value, onChangeText }: Props) => {
+  const colors = useThemeColors();
+  const styles = createComponentStyles(colors).searchBar;
+  
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <Image source={icons.search} style={globalStyles.iconSmall} resizeMode="contain" />
+    <View style={styles.container}>
+      <Image source={icons.search} style={styles.icon} resizeMode="contain" />
       <TextInput
         onPress={onPress}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
-        style={{ flex: 1, marginLeft: 8 }}
+        style={styles.textInput}
+        placeholderTextColor={colors.textSecondary}
       />
     </View>
   );
-}
+};
 
-export default SearchBar
+export default SearchBar;

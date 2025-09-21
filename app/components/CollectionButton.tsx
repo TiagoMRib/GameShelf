@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Animated, Text, TouchableOpacity } from 'react-native';
-import { gameDetailsStyles } from '../game/gameStyles';
+import { useThemeColors } from '../context/useThemeColors';
+import { createGameDetailsStyles } from '../game/gameStyles';
 
 interface CollectionButtonProps {
   collectionType: 'currentlyPlaying' | 'wishlist' | 'finished';
@@ -15,6 +16,9 @@ const CollectionButton: React.FC<CollectionButtonProps> = ({
   onAdd,
   onRemove
 }) => {
+  const colors = useThemeColors();
+  const styles = createGameDetailsStyles(colors);
+  
   // Animation value for scaling
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
@@ -75,8 +79,8 @@ const CollectionButton: React.FC<CollectionButtonProps> = ({
   return (
     <TouchableOpacity 
       style={[
-        gameDetailsStyles.collectionButton, 
-        isInCollection && gameDetailsStyles.activeButton
+        styles.collectionButton, 
+        isInCollection && styles.activeButton
       ]}
       onPress={handlePress}
       onPressIn={handlePressIn}
@@ -84,7 +88,10 @@ const CollectionButton: React.FC<CollectionButtonProps> = ({
       activeOpacity={1} // Disable default opacity change since we're using scale
     >
       <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-        <Text style={gameDetailsStyles.buttonText}>
+        <Text style={[
+          styles.buttonText,
+          isInCollection && styles.activeButtonText
+        ]}>
           {getButtonText()}
         </Text>
       </Animated.View>

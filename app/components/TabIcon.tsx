@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
-import { tabIconStyles } from './componentStyles';
+import { useThemeColors } from '../context/useThemeColors';
+import { createComponentStyles } from './styles/componentStyles';
 
 type TabIconProps = {
   icon: any; 
@@ -10,17 +11,20 @@ type TabIconProps = {
 };
 
 const TabIcon: React.FC<TabIconProps> = ({ icon, focused, title, isHome = false }) => {
+  const colors = useThemeColors();
+  const styles = createComponentStyles(colors).tabIcon;
+
   if (isHome) {
     return (
       <View style={[
-        tabIconStyles.homeIconContainer, 
-        focused && tabIconStyles.homeIconContainerFocused
+        styles.homeIconContainer, 
+        focused && styles.homeIconContainerFocused
       ]}>
         <Image 
           source={icon} 
           style={[
-            tabIconStyles.homeTabIcon,
-            focused && tabIconStyles.homeTabIconFocused
+            styles.homeTabIcon,
+            focused && styles.homeTabIconFocused
           ]} 
           resizeMode="contain" 
         />
@@ -30,19 +34,19 @@ const TabIcon: React.FC<TabIconProps> = ({ icon, focused, title, isHome = false 
 
   return (
     <View style={[
-      tabIconStyles.iconContainer, 
-      focused && tabIconStyles.iconContainerFocused
+      styles.iconContainer, 
+      focused && styles.iconContainerFocused
     ]}>
       <Image 
         source={icon} 
         style={[
-          tabIconStyles.tabIcon,
-          focused && tabIconStyles.tabIconFocused
+          styles.tabIcon,
+          focused && styles.tabIconFocused
         ]} 
         resizeMode="contain" 
       />
       {focused && (
-        <Text style={tabIconStyles.iconTitle}>{title}</Text>
+        <Text style={styles.iconTitle}>{title}</Text>
       )}
     </View>
   );

@@ -47,7 +47,7 @@ npx expo start
 
 ### Bonus
 
-- [x] custom hooks (e.g. useGames, useCollection)
+- [x] custom hooks
 - [ ] Add a light/dark mode toggle
 - [ ] Add unit or component tests (Jest / @testing-library/react-native)
 - [ ] Use a global state manager (Context API, Zustand, or Redux) to organize collection

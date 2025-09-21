@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
+import { ThemeColors } from '../../context/ThemeColors';
 
-export const settingsStyles = StyleSheet.create({
+export const createSettingsStyles = (colors: ThemeColors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.background,
   },
   header: {
     alignItems: 'center',
@@ -19,19 +20,30 @@ export const settingsStyles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 15,
     paddingHorizontal: 15,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.surface,
     marginBottom: 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: colors.border,
   },
   settingText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#333',
+    color: colors.text,
   },
   settingValue: {
     fontSize: 14,
-    color: '#666',
+    color: colors.textSecondary,
+  },
+  themeToggle: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+  },
+  themeToggleText: {
+    color: colors.background,
+    fontSize: 12,
+    fontWeight: '600',
   },
 });

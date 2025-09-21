@@ -7,10 +7,13 @@ import { useCollections } from '../../services/useCollections';
 import useFetch from '../../services/useFetch';
 import CollectionButton from '../components/CollectionButton';
 import HoursPlayedPopUp from '../components/HoursPlayedPopUp';
-import { gameDetailsStyles as styles } from './gameStyles';
+import { useThemeColors } from '../context/useThemeColors';
+import { createGameDetailsStyles } from './gameStyles';
 
 const GameDetails = () => {
     const { id } = useLocalSearchParams();
+    const colors = useThemeColors();
+    const styles = createGameDetailsStyles(colors);
     
     const [isHoursPopUpVisible, setIsHoursPopUpVisible] = useState(false);
     const [isEditingHours, setIsEditingHours] = useState(false);
@@ -105,7 +108,8 @@ const GameDetails = () => {
     if (gameLoading) {
         return (
             <View style={styles.centered}>
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color={colors.primary} />
+                <Text style={styles.loadingText}>Loading game details...</Text>
             </View>
         );
     }
@@ -121,14 +125,14 @@ const GameDetails = () => {
     if (!game) {
         return (
             <View style={styles.centered}>
-                <Text>Game not found</Text>
+                <Text style={styles.errorText}>Game not found</Text>
             </View>
         );
     }
 
     return (
         <>
-            <ScrollView style={styles.container}>
+            <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <Image 
                     source={{ uri: game.background_image }} 
                     style={styles.headerImage}
