@@ -1,57 +1,8 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Image, Text, View } from 'react-native';
 import { icons } from '../../assets/constants/icons';
+import TabIcon from '../components/TabIcon';
 import { tabBarStyles } from './tabbarStyles';
-
-type TabIconProps = {
-  icon: any; 
-  focused: boolean;
-  title: string;
-  isHome?: boolean; // Special prop for home tab
-};
-
-function TabIcon({ icon, focused, title, isHome = false }: TabIconProps) {
-  if (isHome) {
-    // Special rendering for home tab
-    return (
-      <View style={[
-        tabBarStyles.homeIconContainer, 
-        focused && tabBarStyles.homeIconContainerFocused
-      ]}>
-        <Image 
-          source={icon} 
-          style={[
-            tabBarStyles.homeTabIcon,
-            focused && tabBarStyles.homeTabIconFocused
-          ]} 
-          resizeMode="contain" 
-        />
-        {/* No text for home tab */}
-      </View>
-    );
-  }
-
-  // Regular tab rendering
-  return (
-    <View style={[
-      tabBarStyles.iconContainer, 
-      focused && tabBarStyles.iconContainerFocused
-    ]}>
-      <Image 
-        source={icon} 
-        style={[
-          tabBarStyles.tabIcon,
-          focused && tabBarStyles.tabIconFocused
-        ]} 
-        resizeMode="contain" 
-      />
-      {focused && (
-        <Text style={tabBarStyles.iconTitle}>{title}</Text>
-      )}
-    </View>
-  );
-}
 
 const _layout = () => {
   return (
@@ -60,53 +11,77 @@ const _layout = () => {
         tabBarShowLabel: false,
         tabBarStyle: tabBarStyles.tabBar
       }}
-      initialRouteName="index" // Set home as the initial route
+      initialRouteName="index"
     >
+      {/* LEFT GROUP - Settings & Search */}
+      <Tabs.Screen 
+        name="settings" 
+        options={{ 
+          headerShown: false, 
+          title: 'Settings',
+          tabBarItemStyle: tabBarStyles.leftTabStyle,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.settings} title="Settings" />
+          )
+        }} 
+      />
+      
       <Tabs.Screen 
         name="search" 
         options={{ 
           headerShown: false, 
-          title: 'Search', 
+          title: 'Search',
+          tabBarItemStyle: tabBarStyles.leftTabStyle,
           tabBarIcon: ({ focused }) => (
             <TabIcon focused={focused} icon={icons.search} title="Search" />
           )
         }} 
       />
-      <Tabs.Screen 
-        name="wishlist" 
-        options={{ 
-          headerShown: false, 
-          title: 'Wishlist', 
-          tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.wishlist} title="Wishlist" />
-          )
-        }} 
-      />
+      
+      {/* CENTER - Home */}
       <Tabs.Screen 
         name="index" 
         options={{ 
           headerShown: false, 
-          title: 'Home', 
+          title: 'Home',
+          tabBarItemStyle: tabBarStyles.centerTabStyle,
           tabBarIcon: ({ focused }) => (
             <TabIcon focused={focused} icon={icons.app} title="Home" isHome={true} />
           )
         }} 
       />
+      
+      {/* RIGHT GROUP - Collections */}
       <Tabs.Screen 
         name="playing" 
         options={{ 
           headerShown: false, 
-          title: 'Currently Playing', 
+          title: 'Currently Playing',
+          tabBarItemStyle: tabBarStyles.rightTabStyle,
           tabBarIcon: ({ focused }) => (
             <TabIcon focused={focused} icon={icons.playing} title="Playing" />
           )
         }} 
       />
+      
+      <Tabs.Screen 
+        name="wishlist" 
+        options={{ 
+          headerShown: false, 
+          title: 'Wishlist',
+          tabBarItemStyle: tabBarStyles.rightTabStyle,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.wishlist} title="Wishlist" />
+          )
+        }} 
+      />
+      
       <Tabs.Screen 
         name="finished" 
         options={{ 
           headerShown: false, 
-          title: 'Finished', 
+          title: 'Finished',
+          tabBarItemStyle: tabBarStyles.rightTabStyle,
           tabBarIcon: ({ focused }) => (
             <TabIcon focused={focused} icon={icons.finished} title="Finished" />
           )

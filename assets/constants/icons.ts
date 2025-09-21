@@ -3,6 +3,7 @@ import edit from '../icons/edit.png'
 import finished from '../icons/finished.png'
 import playing from '../icons/playing.png'
 import search from '../icons/search.png'
+import settings from '../icons/settings.png'
 import wishlist from '../icons/wishlist.png'
 
 export const icons = {
@@ -11,5 +12,6 @@ export const icons = {
   wishlist,
   finished,
   playing,
-  edit
+  edit,
+  settings
 }
