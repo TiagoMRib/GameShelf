@@ -46,10 +46,10 @@ const Search = () => {
         numColumns={3} 
         columnWrapperStyle={globalStyles.gameGridColumn}
         ListHeaderComponent={
-        <>
+         <View style={{ padding: 20, alignItems: 'center' }}>
           <Image source={icons.app} style={{ width: 100, height: 100, alignSelf: 'center', marginTop: 50 }} />
           <SearchBar  
-            placeholder="Search"
+            placeholder="Search for a game..."
             value={searchQuery}
             onChangeText={(text: string) => setSearchQuery(text)}
           />
@@ -65,7 +65,7 @@ const Search = () => {
           
 
         )}
-        </>
+        </View>
         }
         ListEmptyComponent={ 
           !gamesLoading && !gamesError ? (

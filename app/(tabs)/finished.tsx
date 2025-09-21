@@ -13,10 +13,9 @@ const Finished = () => {
     refresh
   } = useCollections();
 
-  // Refresh collections when tab 
+  // Refresh collections when tab open
   useFocusEffect(
     useCallback(() => {
-      console.log('Finished tab focused, refreshing collections...');
       refresh();
     }, [refresh])
   );

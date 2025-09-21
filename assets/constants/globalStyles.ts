@@ -30,7 +30,7 @@ export const globalStyles = StyleSheet.create({
     paddingBottom: 20,
   },
   gameGridColumn: {
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     paddingHorizontal: 5,
     marginBottom: 15,
   },

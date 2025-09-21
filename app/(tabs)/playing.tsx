@@ -13,10 +13,9 @@ const CurrentlyPlaying = () => {
     refresh
   } = useCollections();
 
-  // Refresh collections when tab comes into focus
+  // Refresh collections when tab open
   useFocusEffect(
     useCallback(() => {
-      console.log('Playing tab focused, refreshing collections...');
       refresh();
     }, [refresh])
   );

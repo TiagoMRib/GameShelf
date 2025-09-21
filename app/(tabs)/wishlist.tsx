@@ -13,10 +13,9 @@ const Wishlist = () => {
     refresh
   } = useCollections();
 
-  // Refresh collections when tab 
+  // Refresh collections when tab open
   useFocusEffect(
     useCallback(() => {
-      console.log('Wishlist tab focused, refreshing collections...');
       refresh();
     }, [refresh])
   );

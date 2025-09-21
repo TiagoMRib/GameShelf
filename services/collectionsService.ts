@@ -46,7 +46,6 @@ export class CollectionsService {
       const key = COLLECTIONS_KEYS[collectionType];
       await AsyncStorage.setItem(key, JSON.stringify(collection));
       
-      console.log(`Added game "${game.name}" to ${collectionType} collection`);
     } catch (error) {
       console.error(`Error adding to ${collectionType} collection:`, error);
       throw error;
@@ -62,7 +61,6 @@ export class CollectionsService {
       const key = COLLECTIONS_KEYS[collectionType];
       await AsyncStorage.setItem(key, JSON.stringify(filteredCollection));
       
-      console.log(`Removed game with id ${gameId} from ${collectionType} collection`);
     } catch (error) {
       console.error(`Error removing from ${collectionType} collection:`, error);
       throw error;
@@ -100,9 +98,7 @@ export class CollectionsService {
     try {
       const key = COLLECTIONS_KEYS[collectionType];
       await AsyncStorage.removeItem(key);
-      console.log(`Cleared ${collectionType} collection`);
     } catch (error) {
-      console.error(`Error clearing ${collectionType} collection:`, error);
       throw error;
     }
   }

@@ -25,9 +25,8 @@ export const useCollections = (gameId?: number): UseCollectionsResult => {
   const loadCollections = useCallback(async () => {
     setLoading(true);
     try {
-      console.log('Loading all collections...');
       const collections = await CollectionsService.getAllCollections();
-      console.log('Loaded collections:', collections);
+
       setCurrentlyPlaying(collections.currentlyPlaying);
       setWishlist(collections.wishlist);
       setFinished(collections.finished);
@@ -72,7 +71,6 @@ export const useCollections = (gameId?: number): UseCollectionsResult => {
   }, [loadCollections]);
 
   const refresh = useCallback(() => {
-    console.log('Refresh called, reloading collections...');
     loadCollections();
   }, [loadCollections]);
 
