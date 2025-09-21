@@ -16,9 +16,22 @@ GameShelf lets users search for video games using the [RAWG API](https://rawg.io
 
 2. **Start the app (Expo)**
 
-npx expo start
+   ```bash
+   npx expo start
+   ```
 
 3. **Scan the QR code with Expo Go or run in an Android/iOS emulator**
+
+4. **Get RAWG API Key**
+   - Visit [https://rawg.io/apidocs](https://rawg.io/apidocs)
+   - Create an account and obtain your API key
+
+5. **Environment Configuration**
+   - Create a `.env` file in the root of your project
+   - Add your API key:
+   ```
+   EXPO_PUBLIC_RAWG_API_KEY=YOURKEY
+   ```
 
 ## Assignment Checklist
 
@@ -48,6 +61,67 @@ npx expo start
 ### Bonus
 
 - [x] custom hooks
-- [ ] Add a light/dark mode toggle
+      -- useTheme (theme management)
+      -- useThemeColors
+      -- useFetch (Generic data fetching)
+      -- usePaginatedGames (for the infinite scroll)
+      -- useCollections (collection management)
+- [x] Add a light/dark mode toggle
 - [ ] Add unit or component tests (Jest / @testing-library/react-native)
 - [ ] Use a global state manager (Context API, Zustand, or Redux) to organize collection
+
+---
+
+## What Was Implemented
+
+- **Game Browsing**: Browse popular games with pagination
+- **Game Details**: View individual games' details
+- **Search**: Search for games by title
+- **Navigation**: Stack navigation between screens
+- **API Integration**: RAWG API integration for game data
+
+## Architectural Decisions
+
+### Technology Choices
+
+**React Native with Expo**
+- Chosen for rapid development and cross-platform compatibility
+- Trade-off: Some limitations with native modules, but acceptable for this scope
+
+**Functional Components with Hooks**
+- For better code organization
+- useState and useEffect for local component state management
+- Custom hooks for reusable logic
+
+**Fetch API for HTTP Requests**
+- Simple and lightweight for basic API calls
+
+**FlatList for Game Lists**
+- Optimized rendering for large lists with built-in virtualization
+- Excellent performance for scrolling through game collections
+
+### Design Decisions
+
+**Component Structure**
+- UI broken down into smaller, focused components
+- Built reusable components so code wouldn't be repeated
+
+**Error Handling**
+- Basic error messages
+
+**Performance Optimizations**
+- Games load as they come into view using pagination
+- Avoided unnecessary re-renders by being careful with state updates
+- Debounced search input to reduce API calls and improve performance
+
+## Trade-offs
+
+1. **Local State vs Global State**: Used local component state for simplicity, though global state would be beneficial for larger apps
+2. **Basic Error Handling**: Implemented simple error states rather than comprehensive error recovery
+3. **Minimal Caching**: No persistent caching implemented to keep the app lightweight
+4. **Basic UI**: Focused on functionality over complex animations and styling
+
+## Not Implemented
+
+- **Add a test (unit or component) using Jest or @testing-library/react-native**
+- **Use a global state manager like Context API, Zustand or Redux to organize your collection**

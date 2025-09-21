@@ -3,7 +3,7 @@ import React from 'react';
 import { icons } from '../../assets/constants/icons';
 import TabIcon from '../components/TabIcon';
 import { useThemeColors } from '../context/useThemeColors';
-import { createTabBarStyles } from './tabbarStyles';
+import { createTabBarStyles } from './styles/tabbarStyles';
 
 const _layout = () => {
   const colors = useThemeColors();
