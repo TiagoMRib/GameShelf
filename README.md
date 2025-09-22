@@ -29,7 +29,6 @@ GameShelf lets users search for video games using the [RAWG API](https://rawg.io
      ```
    - **Option C**: Install pre-built APK on Android device:
      - Download: [GameShelf APK](https://expo.dev/accounts/tiagomrib/projects/GameShelf/builds/c5cf594a-6b3b-4b2b-b59d-b0f87fe749f9)
-     - Alternative: Check the `./builds/` folder for local APK file
      - **Note**: You still need to run `npx expo start` for the development server
 
 4. **Get RAWG API Key**
