@@ -9,7 +9,11 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.GameShelf",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -17,7 +21,8 @@
         "foregroundImage": "./assets/icons/app.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.GameShelf"
     },
     "web": {
       "output": "static",
@@ -43,7 +48,11 @@
       "reactCompiler": true
     },
     "extra": {
-      "EXPO_PUBLIC_RAWG_API_KEY": "${EXPO_PUBLIC_RAWG_API_KEY}"
+      "EXPO_PUBLIC_RAWG_API_KEY": "${EXPO_PUBLIC_RAWG_API_KEY}",
+      "router": {},
+      "eas": {
+        "projectId": "8a57cbf8-d9d1-435d-95b0-ac906220dd90"
+      }
     }
   }
 }

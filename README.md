@@ -20,7 +20,17 @@ GameShelf lets users search for video games using the [RAWG API](https://rawg.io
    npx expo start
    ```
 
-3. **Scan the QR code with Expo Go or run in an Android/iOS emulator**
+3. **Run the app**
+
+   - **Option A**: Scan the QR code with Expo Go app on your mobile device
+   - **Option B**: Run on a connected Android device or emulator:
+     ```bash
+     npx expo run:android
+     ```
+   - **Option C**: Install pre-built APK on Android device:
+     - Download: [GameShelf APK](https://expo.dev/accounts/tiagomrib/projects/GameShelf/builds/c5cf594a-6b3b-4b2b-b59d-b0f87fe749f9)
+     - Alternative: Check the `./builds/` folder for local APK file
+     - **Note**: You still need to run `npx expo start` for the development server
 
 4. **Get RAWG API Key**
 
