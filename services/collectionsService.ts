@@ -1,11 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/**
+ * Storage keys for the different game collections in AsyncStorage
+ */
 const COLLECTIONS_KEYS = {
   currentlyPlaying: 'currentlyPlaying',
   wishlist: 'wishlist', 
   finished: 'finished'
 };
 
+/**
+ * Interface defining the structure of a game in any collection
+ */
 export interface GameCollection {
   id: number;
   name: string;
@@ -14,8 +20,17 @@ export interface GameCollection {
   hoursPlayed?: number; // Only used for finished games
 }
 
+/**
+ * Service class for managing game collections in local storage
+ * Handles all CRUD operations for Currently Playing, Wishlist, and Finished game lists
+ */
 export class CollectionsService {
-  // Get games from a specific collection
+  /**
+   * Retrieves all games from a specific collection
+   * 
+   * @param collectionType - Which collection to retrieve (currentlyPlaying, wishlist, or finished)
+   * @returns Promise containing array of games in that collection
+   */
   static async getCollection(collectionType: keyof typeof COLLECTIONS_KEYS): Promise<GameCollection[]> {
     try {
       const key = COLLECTIONS_KEYS[collectionType];
@@ -27,7 +42,12 @@ export class CollectionsService {
     }
   }
 
-  // Add a game to a collection
+  /**
+   * Adds a game to a specific collection, or updates it if it already exists
+   * 
+   * @param collectionType - Target collection for the game
+   * @param game - Complete game data to add/update
+   */
   static async addToCollection(collectionType: keyof typeof COLLECTIONS_KEYS, game: GameCollection): Promise<void> {
     try {
       const collection = await this.getCollection(collectionType);
@@ -52,7 +72,12 @@ export class CollectionsService {
     }
   }
 
-  // Remove a game from a collection
+  /**
+   * Removes a game from a specific collection by its ID
+   * 
+   * @param collectionType - Collection to remove the game from
+   * @param gameId - Unique identifier of the game to remove
+   */
   static async removeFromCollection(collectionType: keyof typeof COLLECTIONS_KEYS, gameId: number): Promise<void> {
     try {
       const collection = await this.getCollection(collectionType);
@@ -67,7 +92,14 @@ export class CollectionsService {
     }
   }
 
-  // Check if a game is in a collection
+  /**
+   * Checks if a specific game exists in a collection
+   * Used for determining button states (show "Add to Wishlist" or "Remove from Wishlist")
+   * 
+   * @param collectionType - Collection to check
+   * @param gameId - Game ID to look for
+   * @returns Promise resolving to true if game exists in collection
+   */
   static async isInCollection(collectionType: keyof typeof COLLECTIONS_KEYS, gameId: number): Promise<boolean> {
     try {
       const collection = await this.getCollection(collectionType);
@@ -78,7 +110,12 @@ export class CollectionsService {
     }
   }
 
-  // Get all collections at once
+  /**
+   * Efficiently retrieves all three collections in a single operation
+   * Uses Promise.all to fetch all collections simultaneously for better performance
+   * 
+   * @returns Promise containing object with all three collections
+   */
   static async getAllCollections() {
     const [currentlyPlaying, wishlist, finished] = await Promise.all([
       this.getCollection('currentlyPlaying'),
@@ -93,7 +130,11 @@ export class CollectionsService {
     };
   }
 
-  // Clear a specific collection
+  /**
+   * Completely clears a specific collection from storage (not used)
+   * 
+   * @param collectionType - Which collection to clear
+   */
   static async clearCollection(collectionType: keyof typeof COLLECTIONS_KEYS): Promise<void> {
     try {
       const key = COLLECTIONS_KEYS[collectionType];

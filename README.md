@@ -23,6 +23,7 @@ GameShelf lets users search for video games using the [RAWG API](https://rawg.io
 3. **Scan the QR code with Expo Go or run in an Android/iOS emulator**
 
 4. **Get RAWG API Key**
+
    - Visit [https://rawg.io/apidocs](https://rawg.io/apidocs)
    - Create an account and obtain your API key
 
@@ -61,11 +62,11 @@ GameShelf lets users search for video games using the [RAWG API](https://rawg.io
 ### Bonus
 
 - [x] custom hooks
-      -- useTheme (theme management)
-      -- useThemeColors
-      -- useFetch (Generic data fetching)
-      -- usePaginatedGames (for the infinite scroll)
-      -- useCollections (collection management)
+      -- **useTheme** (theme management) - Manages light/dark mode switching and persists theme preference
+      -- **useThemeColors** - Provides current theme colors throughout the app for consistent styling
+      -- **useFetch** (Generic data fetching) - Reusable hook for API calls with loading, error, and data states
+      -- **usePaginatedGames** (for the infinite scroll) - Handles pagination and infinite scroll for game lists
+      -- **useCollections** (collection management) - Manages adding/removing games from Currently Playing, Wishlist, and Finished collections
 - [x] Add a light/dark mode toggle
 - [ ] Add unit or component tests (Jest / @testing-library/react-native)
 - [ ] Use a global state manager (Context API, Zustand, or Redux) to organize collection
@@ -85,31 +86,46 @@ GameShelf lets users search for video games using the [RAWG API](https://rawg.io
 ### Technology Choices
 
 **React Native with Expo**
+
 - Chosen for rapid development and cross-platform compatibility
 - Trade-off: Some limitations with native modules, but acceptable for this scope
 
 **Functional Components with Hooks**
+
 - For better code organization
 - useState and useEffect for local component state management
 - Custom hooks for reusable logic
 
+**Custom Hooks Architecture**
+
+- **useTheme**: Centralized theme management with AsyncStorage persistence
+- **useThemeColors**: Computed theme colors based on current theme state
+- **useFetch**: Generic async data fetching with loading, error, and retry states
+- **usePaginatedGames**: Infinite scroll implementation with pagination logic
+- **useCollections**: Game collection CRUD operations with local storage integration
+
 **Fetch API for HTTP Requests**
+
 - Simple and lightweight for basic API calls
 
 **FlatList for Game Lists**
+
 - Optimized rendering for large lists with built-in virtualization
 - Excellent performance for scrolling through game collections
 
 ### Design Decisions
 
 **Component Structure**
+
 - UI broken down into smaller, focused components
 - Built reusable components so code wouldn't be repeated
 
 **Error Handling**
+
 - Basic error messages
 
 **Performance Optimizations**
+
 - Games load as they come into view using pagination
 - Avoided unnecessary re-renders by being careful with state updates
 - Debounced search input to reduce API calls and improve performance
